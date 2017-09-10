@@ -7,27 +7,27 @@ import (
 	"time"
 
 	uuid "github.com/nu7hatch/gouuid"
+	"github.com/opiumated/Conduit_2/models"
 )
 
-func logRegUp(w http.ResponseWriter, r *http.Request) {
+func LogRegUpHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 
-		var user userInformation
+		var user models.User
 
 		user.UID = r.FormValue("uid")
 		user.Name = r.FormValue("uname")
 		user.Gender = r.FormValue("usex")
 		user.ProfilePic = r.FormValue("upic")
 		user.TimeStamp = time.Now().Format(time.RFC850)
-
-		response := logRegUpHelper(user)
+		response := models.LogRegUpHelper(user)
 		fmt.Fprintf(w, response)
 	}
 
 	log.Println(r.URL.Path)
 }
 
-func addProject(w http.ResponseWriter, r *http.Request) {
+func AddProjectHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		var project myProjectInfo
 		s, _ := uuid.NewV4()
@@ -39,7 +39,7 @@ func addProject(w http.ResponseWriter, r *http.Request) {
 		project.TimeStamp = time.Now().Format(time.RFC850)
 		uid := r.FormValue("uid")
 
-		response := addPojectHelper(uid, project)
+		response := models.AddPojectHelper(uid, project)
 
 		fmt.Fprintf(w, response)
 	}
@@ -47,7 +47,7 @@ func addProject(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.URL.Path)
 }
 
-func joinProject(w http.ResponseWriter, r *http.Request) {
+func JoinProjectHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		var joinPro joinedByMeProjectInfo
 		var coJoinPro coJoinProjectInfo
@@ -60,7 +60,7 @@ func joinProject(w http.ResponseWriter, r *http.Request) {
 		coJoinPro.CUID = r.FormValue("cuid")
 		coJoinPro.CName = r.FormValue("cname")
 
-		response := joinProjectHelper(joinPro, coJoinPro)
+		response := models.JoinProjectHelper(joinPro, coJoinPro)
 
 		fmt.Fprintf(w, response)
 	}
@@ -68,13 +68,13 @@ func joinProject(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.URL.Path)
 }
 
-func leaveProject(w http.ResponseWriter, r *http.Request) {
+func LeaveProjectHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		pid := r.FormValue("pid")
 		juid := r.FormValue("juid")
 		cuid := r.FormValue("cuid")
 
-		response := leaveProjectHelper(juid, cuid, pid)
+		response := models.LeaveProjectHelper(juid, cuid, pid)
 
 		fmt.Fprintf(w, response)
 	}
@@ -82,13 +82,13 @@ func leaveProject(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.URL.Path)
 }
 
-func deleteProject(w http.ResponseWriter, r *http.Request) {
+func DeleteProjectHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		pid := r.FormValue("pid")
 		juid := r.FormValue("juid")
 		cuid := r.FormValue("cuid")
 
-		response := leaveProjectHelper(juid, cuid, pid)
+		response := models.LeaveProjectHelper(juid, cuid, pid)
 
 		fmt.Fprintf(w, response)
 	}
