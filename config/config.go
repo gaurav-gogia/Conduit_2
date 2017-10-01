@@ -1,20 +1,20 @@
 package config
 
 import (
-	"gopkg.in/mgo.v2"
 	"log"
 	"os"
+
+	"gopkg.in/mgo.v2"
 )
 
 type Config struct {
 	MongoServer string
-	MongoDB string
-	Session *mgo.Session
-	Database *mgo.Database
+	MongoDB     string
+	Session     *mgo.Session
+	Database    *mgo.Database
 }
 
-
-func InitConfig() *Config{
+func InitConfig() *Config {
 	MONGOSERVER := os.Getenv("MONGO_SERVER")
 	MONGODB := os.Getenv("MONGO_DB")
 	if MONGOSERVER == "" {
@@ -28,9 +28,9 @@ func InitConfig() *Config{
 
 	config := &Config{
 		MongoServer: MONGOSERVER,
-		MongoDB: MONGODB,
-		Session: session,
-		Database: session.DB(MONGODB),
+		MongoDB:     MONGODB,
+		Session:     session,
+		Database:    session.DB(MONGODB),
 	}
 
 	return config
